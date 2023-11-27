@@ -7,22 +7,14 @@ _NOTE: This file lives in `~/.github` as to not clutter your home directory_
 
 Just do this and you're done.
 
-```sh
-curl -sSL https://raw.githubusercontent.com/battellecube/dotfiles/main/.local/bin/install-tools.sh | bash
-
-```
-
-If you're new to CUBE also do this
 
 ```sh
-curl -sSL https://raw.githubusercontent.com/battellecube/dotfiles/main/.local/bin/bootstrap-dotfiles.sh | bash
-
+curl -sSL -o /tmp/bootstrap-dotfiles.sh https://raw.githubusercontent.com/battellecube/dotfiles/quick-start/.local/bin/bootstrap-dotfiles.sh
+bash /tmp/bootstrap-dotfiles.sh
 ```
-## First-time Setup
 
-I you need to setup a new Dotfiles repo for your Github account to work with the
-CUBE tools, follow the steps below.  If you don't know what this means, then you
-like need to do this. Don't worry you typically only have to do this once. ;)
+That's it, you're done. If you want to know more or hack on this repo, read on!
+
 
 ### The What and Why of Dotfiles
 
@@ -39,10 +31,6 @@ Dotfiles are configuration files in Unix-like systems, typically used to persona
 5. **Backup and Restoration**: Dotfiles in a version-controlled system act as a backup. In case of system failure or when setting up a new machine, engineers can easily restore their preferred environment.
 
 6. **Collaboration and Sharing Best Practices**: Sharing dotfiles within a team or the wider community allows for sharing of best practices and useful configurations, fostering a collaborative environment.
-
-### Do These Steps Only-once
-
-```
 
 
 ## Hacking the Gibson

@@ -56,6 +56,9 @@ install-cube-cli()
 	sudo apt build-dep -y cube-env
 }
 
+# remove lingering lists in case script was run previously and failed
+#sudo rm /etc/apt/source.list.d/{github-cli.list,terraform-cli.list,cube-env.list}
+
 install-common-packages
 install-github-cli
 install-terraform-cli
