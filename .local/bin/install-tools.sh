@@ -24,7 +24,7 @@ install-terraform-cli()
 	curl -sSL https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo dd of=/usr/share/keyrings/hashicorp-archive-keyring.gpg
 	sudo chmod go+r /usr/share/keyrings/hashicorp-archive-keyring.gpg
 	echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/terraform-cli.list > /dev/null
-	sudo apt-get update && sudo apt-get install terraform -y
+	sudo apt update && sudo apt install terraform -y
 }
 
 install-github-cli()
@@ -44,8 +44,10 @@ install-cube-cli()
 {
 	type -p gh >/dev/null || install-github-cli
 	type -p gpg >/dev/null || install-common-packages
-	gh repo clone battellecube/cube-env
-	cd  cube-env
+	type -p git >/dev/null || install-common-packages
+	local REPO=$(mktemp -d)
+	gh repo clone battellecube/cube-env $REPO
+	cd  $REPO
 	git checkout deb_repo
 	cat KEY.gpg | gpg --dearmor | sudo dd of=/usr/share/keyrings/cubeenvcli-archive-keyring.gpg
 	sudo chmod go+r /usr/share/keyrings/cubeenvcli-archive-keyring.gpg
@@ -59,8 +61,31 @@ install-cube-cli()
 # remove lingering lists in case script was run previously and failed
 #sudo rm /etc/apt/source.list.d/{github-cli.list,terraform-cli.list,cube-env.list}
 
-install-common-packages
-install-github-cli
-install-terraform-cli
-install-azure-cli
-install-cube-cli
+[[ "$(id -u)" == "0" ]] || {
+	echo "Please login for sudo access"
+	sudo true
+}
+echo -n "Installing base packages..."
+install-common-packages &>/dev/null
+echo "done."
+type -p gh >/dev/null || {
+	echo -n "Installing Github CLI..."
+	install-github-cli &>/dev/null
+	echo "done."
+}
+type -p terraform &>/dev/null || {
+	echo -n "Installing Terraform CLI..."
+	install-terraform-cli &>/dev/null
+	echo "done."
+}
+type -p az &>/dev/null || {
+	echo -n "Install Azure CLI..."
+	install-azure-cli &>/dev/null
+	echo "done."
+}
+type -p cube &>/dev/null || {
+	echo -n "Installing CUBE CLI..."
+	install-cube-cli &>/dev/null
+	echo "done."
+}
+echo -e "\nFinished!"
