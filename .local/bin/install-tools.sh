@@ -34,10 +34,6 @@ install-github-cli()
 	sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg
 	echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
 	sudo apt update && sudo apt install gh -y
-	if ! gh auth status >/dev/null 2>&1; then
-		echo "Need to login into gh to continue"
-		gh auth login
-	fi
 }
 
 install-cube-cli()
@@ -65,6 +61,7 @@ install-cube-cli()
 	echo "Please login for sudo access"
 	sudo true
 }
+
 echo -n "Installing base packages..."
 install-common-packages &>/dev/null
 echo "done."
@@ -73,19 +70,28 @@ type -p gh >/dev/null || {
 	install-github-cli &>/dev/null
 	echo "done."
 }
+
+gh auth status &>/dev/null || {
+	echo "Need to login into gh to continue"
+	gh auth login
+}
+
 type -p terraform &>/dev/null || {
 	echo -n "Installing Terraform CLI..."
 	install-terraform-cli &>/dev/null
 	echo "done."
 }
+
 type -p az &>/dev/null || {
 	echo -n "Install Azure CLI..."
 	install-azure-cli &>/dev/null
 	echo "done."
 }
+
 type -p cube &>/dev/null || {
 	echo -n "Installing CUBE CLI..."
 	install-cube-cli &>/dev/null
 	echo "done."
 }
+
 echo -e "\nFinished!"
