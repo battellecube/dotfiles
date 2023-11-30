@@ -6,7 +6,7 @@ install-common-packages()
 {
 	sudo apt update
 	sudo apt dist-upgrade -y
-	sudo apt install -y powerline vim-nox build-essential gnupg curl tmux git{,-lfs} silversearcher-ag etckeeper xdg-utils wslu software-properties-common python3-pip
+	sudo apt install -y vim-nox build-essential gnupg curl git{,-lfs} etckeeper xdg-utils wslu software-properties-common
 	git lfs install
 }
 
