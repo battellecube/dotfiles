@@ -73,7 +73,7 @@ type -p gh >/dev/null || {
 
 gh auth status &>/dev/null || {
 	echo "Need to login into gh to continue"
-	gh auth login
+	gh auth refresh --scopes delete_repo,write:gpg_key
 }
 
 type -p terraform &>/dev/null || {

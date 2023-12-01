@@ -1,24 +1,26 @@
-FROM ubuntu
+FROM ubuntu as base
 
-# Set environment variables for non-interactive APT installs
 ENV DEBIAN_FRONTEND=noninteractive
 ENV APT_LISTCHANGES_FRONTEND=none
 ENV APT_LISTBUGS_FRONTEND=none
 
-# Preconfigure timezone for tzdata
-RUN echo 'tzdata tzdata/Areas select America' | debconf-set-selections
-RUN echo 'tzdata tzdata/Zones/America select New_York' | debconf-set-selections
+RUN echo 'tzdata tzdata/Areas select America' | debconf-set-selections && \
+    echo 'tzdata tzdata/Zones/America select New_York' | debconf-set-selections
 
-# Update and install packages non-interactively
-RUN apt update && apt install -y --no-install-recommends ca-certificates tzdata curl sudo ubuntu-minimal
+RUN apt update && apt install -y --no-install-recommends \
+    ca-certificates \
+    tzdata \
+    curl \
+    sudo \
+    ubuntu-minimal && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-# Add your user and set up sudo
-RUN useradd -m tester && echo "tester:tester" | chpasswd
-RUN adduser tester sudo
+FROM base as final
 
-# Clean up APT when done
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN useradd -m tester && \
+    echo "tester:tester" | chpasswd && \
+    adduser tester sudo
 
 USER tester
 WORKDIR /home/tester
-
