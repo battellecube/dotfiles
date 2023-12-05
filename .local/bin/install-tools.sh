@@ -71,15 +71,15 @@ type -p gh >/dev/null || {
 	echo "done."
 }
 
-gh auth status &>/dev/null || {
-	echo "Need to login into gh to continue"
-	gh auth login
-}
-
 type -p az &>/dev/null || {
 	echo -n "Install Azure CLI..."
 	install-azure-cli &>/dev/null
 	echo "done."
+}
+
+gh auth status &>/dev/null || {
+	echo "Need to login into gh to continue"
+	gh auth login
 }
 
 type -p cube &>/dev/null || {
