@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 # BEGIN: Git setup
 USER_NAME="$(git config --global user.name)"
 [[ "$USER_NAME" ]] || {
@@ -13,6 +15,21 @@ USER_EMAIL="$(git config --global user.email)"
 	git config --global user.email "$USER_EMAIL"
 }
 # END: Git setup
+
+# need to test for scopes
+output=$(gh auth status)
+if echo "$output" | grep -q "delete_repo" && echo "$output" | grep -q "write:gpg_key"; then
+	scopes_exist='true'
+fi
+[[ "$scopes_exist" ]] || {
+	gh auth refresh --scopes delete_repo,write:gpg_key
+}
+
+type -p terraform &>/dev/null || {
+	echo -n "Installing Terraform CLI..."
+	install-terraform-cli &>/dev/null
+	echo "done."
+}
 
 # BEGIN: GPG setup
 GPG_KEYS=(`gh gpg-key list | awk '/battelle.org/{print $2}'`)

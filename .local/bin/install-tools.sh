@@ -73,13 +73,7 @@ type -p gh >/dev/null || {
 
 gh auth status &>/dev/null || {
 	echo "Need to login into gh to continue"
-	gh auth refresh --scopes delete_repo,write:gpg_key
-}
-
-type -p terraform &>/dev/null || {
-	echo -n "Installing Terraform CLI..."
-	install-terraform-cli &>/dev/null
-	echo "done."
+	gh auth login
 }
 
 type -p az &>/dev/null || {
