@@ -6,6 +6,6 @@ echo "Let's get you setup!"
 curl -sSL -o /tmp/install-tools.sh https://raw.githubusercontent.com/battellecube/dotfiles/quick-start/.local/bin/install-tools.sh
 bash /tmp/install-tools.sh
 
-configure-dotfiles
+curl -sSL -o /tmp/install-tools.sh https://raw.githubusercontent.com/battellecube/dotfiles/quick-start/.local/bin/configure-dotfiles.sh
 
 echo "All done!!"
