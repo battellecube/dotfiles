@@ -44,7 +44,7 @@ for k in "${GPG_KEYS[@]}"; do
 	fi
 done
 
-if [ "$key_found" = false ]; then
+if [ "$key_found" == "false" ]; then
 	echo "Creating a new GPG key"
 	TEMP_DIR=$(mktemp -dq )
 	CONFIG_FILE="$TEMP_DIR/key-config"
