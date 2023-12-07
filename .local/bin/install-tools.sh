@@ -38,17 +38,17 @@ install-github-cli()
 
 install-cube-cli()
 {
-	type -p gh >/dev/null || install-github-cli
-	type -p gpg >/dev/null || install-common-packages
-	type -p git >/dev/null || install-common-packages
+	type -p gh #>/dev/null || install-github-cli
+	type -p gpg #>/dev/null || install-common-packages
+	type -p git #>/dev/null || install-common-packages
 	local REPO=$(mktemp -d)
 	gh repo clone battellecube/cube-env $REPO
 	cd  $REPO
 	git checkout deb_repo
 	cat KEY.gpg | gpg --dearmor | sudo dd of=/usr/share/keyrings/cubeenvcli-archive-keyring.gpg
 	sudo chmod go+r /usr/share/keyrings/cubeenvcli-archive-keyring.gpg
-	echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/cubeenvcli-archive-keyring.gpg] https://battellecube.github.io/cube-env ./" | sudo tee /etc/apt/sources.list.d/cube-env.list > /dev/null
-	echo "deb-src [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/cubeenvcli-archive-keyring.gpg] https://battellecube.github.io/cube-env ./" | sudo tee -a /etc/apt/sources.list.d/cube-env.list > /dev/null
+	echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/cubeenvcli-archive-keyring.gpg] https://battellecube.github.io/cube-env ./" | sudo tee /etc/apt/sources.list.d/cube-env.list #> /dev/null
+	echo "deb-src [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/cubeenvcli-archive-keyring.gpg] https://battellecube.github.io/cube-env ./" | sudo tee -a /etc/apt/sources.list.d/cube-env.list #> /dev/null
 	sudo apt update
 	sudo apt install -y cube-env
 	sudo apt build-dep -y cube-env
@@ -84,7 +84,7 @@ gh auth status &>/dev/null || {
 
 type -p cube &>/dev/null || {
 	echo -n "Installing CUBE CLI..."
-	install-cube-cli &>/dev/null
+	install-cube-cli #&>/dev/null
 	echo "done."
 }
 
