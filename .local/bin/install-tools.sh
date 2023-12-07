@@ -71,6 +71,12 @@ type -p gh >/dev/null || {
 	echo "done."
 }
 
+type -p terraform &>/dev/null || {
+	echo -n "Install Terraform CLI..."
+	install-terraform-cli &>/dev/null
+	echo "done."
+}
+
 type -p az &>/dev/null || {
 	echo -n "Install Azure CLI..."
 	install-azure-cli &>/dev/null
