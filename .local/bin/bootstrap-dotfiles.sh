@@ -17,5 +17,9 @@ curl -sSL -o /tmp/configure-dotfiles.sh https://raw.githubusercontent.com/battel
 bash /tmp/configure-dotfiles.sh
 
 # Hook user dotfiles, if exist
+username=$(gh auth status | grep -oP 'github.com account \K[^ ]+')
+gh repo view $username/dotfiles --json name &>/dev/null && {
+	echo Hooking dotfiles for $username
+}
 
 echo "All done!!"

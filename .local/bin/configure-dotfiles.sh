@@ -3,12 +3,14 @@
 set -e
 
 # BEGIN: Git setup
-git config --global user.name || {
+USER_NAME=$(git config --global user.name)
+[ -z "$USER_NAME" ] && {
 	read -p "What is your full name? " USER_NAME
 	git config --global user.name "$USER_NAME"
 }
 
-git config --global user.email || {
+USER_EMAIL=$(git config --global user.email)
+[-z "$USER_EMAIL" ] && {
 	read -p "What is your battelle.org email? " USER_EMAIL
 	git config --global user.email "$USER_EMAIL"
 }
