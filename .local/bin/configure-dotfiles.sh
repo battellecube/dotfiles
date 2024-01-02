@@ -10,7 +10,7 @@ USER_NAME=$(git config --global user.name)
 }
 
 USER_EMAIL=$(git config --global user.email)
-[-z "$USER_EMAIL" ] && {
+[ -z "$USER_EMAIL" ] && {
 	read -p "What is your battelle.org email? " USER_EMAIL
 	git config --global user.email "$USER_EMAIL"
 }
