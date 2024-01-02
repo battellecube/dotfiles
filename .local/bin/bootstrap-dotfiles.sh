@@ -16,4 +16,6 @@ bash /tmp/install-tools.sh
 curl -sSL -o /tmp/configure-dotfiles.sh https://raw.githubusercontent.com/battellecube/dotfiles/$BRANCH/.local/bin/configure-dotfiles.sh
 bash /tmp/configure-dotfiles.sh
 
+# Hook user dotfiles, if exist
+
 echo "All done!!"
